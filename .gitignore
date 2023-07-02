@@ -1,0 +1,17 @@
+# npm
+node_modules
+*.log
+*.gz
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# OS X
+.DS_Store*
+Icon?
+._*
+
+# dotenv
+.env
