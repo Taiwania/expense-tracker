@@ -7,10 +7,16 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express')
 const app = express()
 
-// Main router
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+// Define the router
+const router = require('./routes')
+
+// Define and import Handlebars engine
+const exphbs = require('express-handlebars')
+app.engine('handlebars', exphbs.engine({ defaultLayout: 'main' }))
+app.set('view engine', 'handlebars')
+
+// Import router
+app.use(router)
 
 // Port listener
 app.listen(process.env.PORT, () => {
