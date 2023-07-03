@@ -15,3 +15,6 @@ Icon?
 
 # dotenv
 .env
+
+#Prettier
+.prettierrc
