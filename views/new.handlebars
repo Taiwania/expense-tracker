@@ -24,8 +24,8 @@
           />
         </div>
         <div class="mb-3">
-          <label for="categoryid" class="mb-2">類別 *</label>
-          <select class="form-select" id="category" name="category">
+          <label for="category" class="mb-2">類別 *</label>
+          <select class="form-select" id="category" name="categoryid">
             {{#each categorys}}
             <option value="{{this._id}}">{{this.name}}</option>
             {{/each}}

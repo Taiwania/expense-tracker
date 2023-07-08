@@ -7,6 +7,9 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express')
 const app = express()
 
+// Import the mongoose
+require('./config/mongoose')
+
 // Define the router
 const router = require('./routes')
 
