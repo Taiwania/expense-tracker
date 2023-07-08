@@ -1,6 +1,7 @@
 // Set Express and router
 const express = require('express')
 const router = express.Router()
+const Category = require('../../models/category')
 
 // Home
 router.get('/', (req, res) => {
@@ -9,7 +10,10 @@ router.get('/', (req, res) => {
 
 // Show the new expense input form
 router.get('/new', (req, res) => {
-  res.render('new')
+  Category.find({})
+    .lean()
+    .then((categorys) => res.render('new', { categorys }))
+    .catch((error) => console.log(error))
 })
 
 // Export
