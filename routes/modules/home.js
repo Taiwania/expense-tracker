@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
 router.get('/new', (req, res) => {
   Category.find({})
     .lean()
-    .then((categorys) => res.render('new', { categorys }))
+    .then((categories) => res.render('new', { categories }))
     .catch((error) => console.log(error))
 })
 
