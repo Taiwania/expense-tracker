@@ -20,7 +20,7 @@ const SEED_USER = [
     password: 'Alpha-Camp-202307',
   }
 ]
-const RECORD_LIST = require('../record.json').result
+const RECORD_LIST = require('../recordSeeder').result
 
 // Import the seed data
 db.on('error', () => {
