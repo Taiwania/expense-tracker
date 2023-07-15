@@ -18,8 +18,9 @@ const exphbs = require('express-handlebars')
 app.engine('handlebars', exphbs.engine({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
-// Import router
+// Import router and css
 app.use(router)
+app.use('/css', express.static('css'));
 
 // Port listener
 app.listen(process.env.PORT, () => {
