@@ -5,7 +5,10 @@ const Category = require('../../models/category')
 
 // Home
 router.get('/', (req, res) => {
-  res.render('index')
+  Category.find({})
+    .lean()
+    .then((categories) => res.render('index', { categories }))
+    .catch((error) => console.log(error))
 })
 
 // Show the new expense input form
