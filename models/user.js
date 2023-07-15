@@ -6,9 +6,13 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  date: {
+  email: {
+    type: String,
+    required: true
+  },
+  createDate: {
     type: Date,
-    required: true,
+    default: Date.now,
   },
   password: {
     // Under construction
