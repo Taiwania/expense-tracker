@@ -50,7 +50,7 @@ db.once('open', () => {
               name: recordItem.name,
               date: recordItem.date,
               amount: recordItem.amount,
-              category: category._id,
+              categoryId: category._id,
               userId,
             })
           }

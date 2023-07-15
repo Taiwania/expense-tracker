@@ -18,7 +18,10 @@ db.on('error', () => {
 })
 
 db.once('open', () => {
-  Category.create(seedCategory)
-  console.log('The data of restaurants is imported.')
-  process.exit()
+  return Category.insertMany(seedCategory)
+    .then(() => {
+      console.log('The default categories is imported.')
+      process.exit()
+    })
+    .catch((error) => console.log(error))
 })
