@@ -11,14 +11,15 @@ const userSchema = new Schema({
   },
   email: {
     type: String,
-    required: true
+    required: true,
   },
   createDate: {
     type: Date,
     default: Date.now,
   },
   password: {
-    // Under construction
+    type: String,
+    required: true,
   },
 })
 
