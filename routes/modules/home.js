@@ -42,5 +42,21 @@ router.get('/new', (req, res) => {
     .catch((error) => console.log(error))
 })
 
+// Add new expense
+router.post('/', (req, res) => {
+  const { name, amount, date, categoryId } = req.body
+  const userId = req.user._id
+  const newRecord = new Record({
+    name,
+    amount,
+    date,
+    categoryId,
+    userId,
+  })
+  newRecord.save()
+    .then(() => res.redirect('/'))
+    .catch((error) => console.log(error))
+})
+
 // Export
 module.exports = router
