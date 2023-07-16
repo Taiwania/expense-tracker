@@ -7,20 +7,32 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express')
 const app = express()
 
+// Import related patches
+const session = require('express-session')
+
 // Import the mongoose
 require('./config/mongoose')
 
-// Define the router
+// Import the router
 const router = require('./routes')
 
-// Define and import Handlebars engine
+// Define and use Handlebars engine
 const exphbs = require('express-handlebars')
 app.engine('handlebars', exphbs.engine({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
-// Import router and css
+// Use the patches
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+  })
+)
+
+// Use router and css
 app.use(router)
-app.use('/css', express.static('css'));
+app.use('/css', express.static('css'))
 
 // Port listener
 app.listen(process.env.PORT, () => {
