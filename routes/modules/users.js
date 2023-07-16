@@ -4,8 +4,14 @@ const router = express.Router()
 const passport = require('passport')
 const User = require('../../models/user')
 
+// Show login page
 router.get('/login', (req, res) => {
   res.render('login')
+})
+
+// Show register page
+router.get('/register', (req, res) => {
+  res.render('register')
 })
 
 router.post(

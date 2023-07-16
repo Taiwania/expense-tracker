@@ -32,7 +32,7 @@ app.use(
 )
 usePassport(app)
 
-// Import Bootstrap and Popper and routers
+// Import body-parser
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 

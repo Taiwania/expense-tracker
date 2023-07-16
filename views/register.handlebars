@@ -1,0 +1,30 @@
+<div class="row mt-5 mb-5">
+  <div class="col-md-6 m-auto">
+    <div class="card card-body">
+      <h1 class="text-center mt-3">註冊</h1>
+      <form action="/users/register" method="POST">
+        <div class="mb-3">
+          <label for="name" class="mb-2">名稱</label>
+          <input type="text" id="name" name="name" class="form-control" placeholder="請輸入名稱">
+        </div>
+        <div class="mb-3">
+          <label for="email" class="mb-2">電子郵件帳號</label>
+          <input type="email" id="email" name="email" class="form-control" placeholder="請輸入電子郵件帳號">
+        </div>
+        <div class="mb-3">
+          <label for="password" class="mb-2">密碼</label>
+          <input type="password" id="password" name="password" class="form-control" placeholder="請輸入密碼">
+        </div>
+        <div class="mb-3">
+          <label for="confirmPassword" class="mb-2">確認密碼</label>
+          <input type="password" id="confirmPassword" name="confirmPassword" class="form-control"
+            placeholder="請再輸入一次密碼">
+        </div>
+        <button type="submit" class="btn btn-success btn-block">註冊</button>
+      </form>
+      <p class="lead mt-4">
+      您已經有帳號了嗎？ <a class="btn btn-primary" href="/users/login">登入</a>
+      </p>
+    </div>
+  </div>
+</div>
