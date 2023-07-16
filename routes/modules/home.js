@@ -15,9 +15,10 @@ const CATEGORY = {
 
 // Home
 router.get('/', (req, res) => {
+  const userId = req.user._id
   Promise.all([
     Category.find({}).lean(),
-    Record.find({}).populate('categoryId').lean(),
+    Record.find({ userId }).populate('categoryId').lean(),
   ])
     .then(([categories, records]) => {
       records.forEach((record) => {
