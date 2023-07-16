@@ -32,6 +32,10 @@ app.use(
 )
 usePassport(app)
 
+// Import Bootstrap and Popper and routers
+app.use(express.static('public'))
+app.use(express.urlencoded({ extended: true }))
+
 // Use router and css
 app.use(router)
 app.use('/css', express.static('css'))
