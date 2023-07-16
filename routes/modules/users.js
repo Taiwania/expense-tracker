@@ -30,6 +30,7 @@ router.get('/logout', function (req, res, next) {
     if (error) {
       return next(error)
     }
+    req.flash('success_msg', '您已經成功登出。')
     res.redirect('/users/login')
   })
 })
@@ -37,18 +38,27 @@ router.get('/logout', function (req, res, next) {
 // Register
 router.post('/register', (req, res) => {
   const { username, email, password, confirmPassword } = req.body
+  const errors = []
+  if (!username || !email || !password || !confirmPassword) {
+    errors.push('請輸入所有欄位。')
+  }
+  if (password !== confirmPassword) {
+    errors.push('您輸入的密碼與確認密碼不一致。')
+  }
+  if (errors.length) {
+    return res.render('register', {
+      errors,
+      username,
+      email,
+      password,
+      confirmPassword,
+    })
+  }
   User.findOne({ email }).then((user) => {
     if (user) {
-      console.log('User already exists.')
-      res.render('register', {
-        username,
-        email,
-        password,
-        confirmPassword,
-      })
-    } else if (password !== confirmPassword) {
-      console.log('Passwords do not match.')
-      res.render('register', {
+      errors.push('您輸入的電子郵件帳號已經被註冊。')
+      return res.render('register', {
+        errors,
         username,
         email,
         password,
@@ -59,7 +69,7 @@ router.post('/register', (req, res) => {
         .genSalt(10)
         .then((salt) => bcrypt.hash(password, salt))
         .then((hash) => {
-          User.create({
+          return User.create({
             username,
             email,
             password: hash,

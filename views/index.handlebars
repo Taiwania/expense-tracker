@@ -58,7 +58,7 @@
 <script>
   function confirmDelete(event, recordId) {
     event.preventDefault()
-    const confirmed = confirm('您確定是否要刪除這筆紀錄？')
+    const confirmed = confirm('確定是否要刪除這筆紀錄？')
 
     if (confirmed) {
       document.getElementById(`delete-form-${recordId}`).submit();

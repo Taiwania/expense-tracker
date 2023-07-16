@@ -11,6 +11,7 @@ const app = express()
 const session = require('express-session')
 const usePassport = require('./config/passport')
 const methodOverride = require('method-override')
+const flash = require('connect-flash')
 
 // Import the mongoose
 require('./config/mongoose')
@@ -37,10 +38,20 @@ app.use(
 )
 usePassport(app)
 
-// Import body-parser and method-override
+// Use body-parser and method-override
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
+
+// Use connect-flash
+app.use(flash())
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.isAuthenticated()
+  res.locals.user = req.user
+  res.locals.success_msg = req.flash('success_msg')
+  res.locals.warning_msg = req.flash('warning_msg')
+  next()
+})
 
 // Set res.locals
 app.use((req, res, next) => {
