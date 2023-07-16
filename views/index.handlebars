@@ -14,50 +14,32 @@
     </div>
     <table class="table table-striped table-borderless align-middle">
       <tbody>
+        {{#each records}}
         <tr>
           <td class="text-center">
-            <i class="fas fa-home fa-2x"></i>
+            <i class="fas {{this.categoryIcon}} fa-2x"></i>
           </td>
           <td>
             <div class="d-flex flex-column">
-              <span style="font-size: 1.5em;">項目名稱</span>
-              <span>日期</span>
+              <span style="font-size: 1.5em;">{{this.name}}</span>
+              <span>{{this.date}}</span>
             </div>
           </td>
           <td class="text-end">
             <div class="d-flex justify-content-end">
-              $111
+              ${{this.amount}}
             </div>
           </td>
           <td class="text-center">
-            <div class="d-flex justify-content-center gap-1">
-              <button type="button" class="btn btn-success">修改</button>
-              <button type="button" class="btn btn-danger">刪除</button>
+            <div class="d-flex justify-content-center align-items-center gap-1">
+              <a href="/edit/{{this._id}}" type="button" class="btn btn-success btn-record">修改</a>
+              <form action="/delete/{{this._id}}?_method=DELETE" method="POST" class="d-flex align-items-center">
+                <button type="submit" class="btn btn-danger btn-record">刪除</button>
+              </form>
             </div>
           </td>
         </tr>
-        <tr>
-          <td class="text-center">
-            <i class="fas fa-home fa-2x"></i>
-          </td>
-          <td>
-            <div class="d-flex flex-column">
-              <span style="font-size: 1.5em;">項目名稱</span>
-              <span>日期</span>
-            </div>
-          </td>
-          <td class="text-end">
-            <div class="d-flex justify-content-end">
-              $1111111
-            </div>
-          </td>
-          <td class="text-center">
-            <div class="d-flex justify-content-center gap-1">
-              <button type="button" class="btn btn-success">修改</button>
-              <button type="button" class="btn btn-danger">刪除</button>
-            </div>
-          </td>
-        </tr>
+        {{/each}}
       </tbody>
       <tfoot>
         <tr>
