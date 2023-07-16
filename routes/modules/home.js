@@ -16,11 +16,19 @@ const CATEGORY = {
 // Home
 router.get('/', (req, res) => {
   const userId = req.user._id
+  const categoryId = req.query.categoryId
+  let query = { userId }
+
+  if (categoryId) {
+    query.categoryId = categoryId
+  }
+
   Promise.all([
     Category.find({}).lean(),
-    Record.find({ userId }).populate('categoryId').lean(),
+    Record.find(query).populate('categoryId').lean(),
   ])
     .then(([categories, records]) => {
+      let totalAmount = 0
       records.forEach((record) => {
         let date = new Date(record.date)
         let year = date.getFullYear()
@@ -28,8 +36,9 @@ router.get('/', (req, res) => {
         let day = date.getDate().toString().padStart(2, '0')
         record.date = `${year}-${month}-${day}`
         record.categoryIcon = CATEGORY[record.categoryId.name]
+        totalAmount += record.amount
       })
-      res.render('index', { categories, records })
+      res.render('index', { categories, records, totalAmount })
     })
     .catch((error) => console.log(error))
 })
