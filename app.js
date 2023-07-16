@@ -3,6 +3,8 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
+const PORT = process.env.PORT || 3310
+
 // Express
 const express = require('express')
 const app = express()
@@ -66,5 +68,5 @@ app.use('/css', express.static('css'))
 
 // Port listener
 app.listen(process.env.PORT, () => {
-  console.log(`The website http://localhost:${process.env.PORT} is running.`)
+  console.log(`The website http://localhost:${PORT} is running.`)
 })
