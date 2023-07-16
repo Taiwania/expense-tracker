@@ -7,8 +7,9 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express')
 const app = express()
 
-// Import related patches
+// Import user authentication patches
 const session = require('express-session')
+const usePassport = require('./config/passport')
 
 // Import the mongoose
 require('./config/mongoose')
@@ -16,12 +17,12 @@ require('./config/mongoose')
 // Import the router
 const router = require('./routes')
 
-// Define and use Handlebars engine
+// Import and use Handlebars engine
 const exphbs = require('express-handlebars')
 app.engine('handlebars', exphbs.engine({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
-// Use the patches
+// Use the user authentication patches
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -29,6 +30,7 @@ app.use(
     saveUninitialized: true,
   })
 )
+usePassport(app)
 
 // Use router and css
 app.use(router)

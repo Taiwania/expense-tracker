@@ -4,11 +4,11 @@ const router = express.Router()
 
 // Import routes
 const home = require('./modules/home')
-const user = require('./modules/user')
+const users = require('./modules/users')
 
 // Set routes
 router.use('/', home)
-router.use('/user', user)
+router.use('/users', users)
 
 // Export
 module.exports = router
