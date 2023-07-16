@@ -91,5 +91,15 @@ router.put('/:id', (req, res) => {
     .catch((error) => console.log(error))
 })
 
+// Delete expense
+router.delete('/:id', (req, res) => {
+  const _id = req.params.id
+  const userId = req.user._id
+
+  Record.findOneAndDelete({ _id, userId })
+    .then(() => res.redirect('/'))
+    .catch((error) => console.log(error))
+})
+
 // Export
 module.exports = router

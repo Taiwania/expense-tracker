@@ -33,8 +33,8 @@
           <td class="text-center">
             <div class="d-flex justify-content-center align-items-center gap-1">
               <a href="/edit/{{this._id}}" type="button" class="btn btn-success btn-record">修改</a>
-              <form action="/delete/{{this._id}}?_method=DELETE" method="POST" class="d-flex align-items-center">
-                <button type="submit" class="btn btn-danger btn-record">刪除</button>
+              <form id="delete-form-{{this._id}}"" action="/{{this._id}}?_method=DELETE" method="POST" class="d-flex align-items-center">
+                <button type="submit" class="btn btn-danger btn-record" onclick="confirmDelete(event, '{{this._id}}')">刪除</button>
               </form>
             </div>
           </td>
@@ -54,3 +54,16 @@
     </table>
   </div>
 </div>
+
+<script>
+  function confirmDelete(event, recordId) {
+    event.preventDefault()
+    const confirmed = confirm('您確定是否要刪除這筆紀錄？')
+
+    if (confirmed) {
+      document.getElementById(`delete-form-${recordId}`).submit();
+    } else {
+      // nothing
+    }
+  }
+</script>
