@@ -7,9 +7,10 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express')
 const app = express()
 
-// Import user authentication patches
+// Import patches
 const session = require('express-session')
 const usePassport = require('./config/passport')
+const methodOverride = require('method-override')
 
 // Import the mongoose
 require('./config/mongoose')
@@ -19,7 +20,11 @@ const router = require('./routes')
 
 // Import and use Handlebars engine
 const exphbs = require('express-handlebars')
-app.engine('handlebars', exphbs.engine({ defaultLayout: 'main' }))
+const handlebars = exphbs.create({ defaultLayout: 'main' })
+handlebars.handlebars.registerHelper('eq', (a, b) => {
+  return a.toString() === b.toString()
+})
+app.engine('handlebars', handlebars.engine)
 app.set('view engine', 'handlebars')
 
 // Use the user authentication patches
@@ -32,9 +37,10 @@ app.use(
 )
 usePassport(app)
 
-// Import body-parser
+// Import body-parser and method-override
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
+app.use(methodOverride('_method'))
 
 // Set res.locals
 app.use((req, res, next) => {

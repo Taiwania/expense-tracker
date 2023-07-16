@@ -6,11 +6,11 @@ const Record = require('../../models/record')
 
 // Set category icons
 const CATEGORY = {
-  '家居物業': 'fa-home',
-  '交通出行': 'fa-shuttle-van',
-  '休閒娛樂': 'fa-grin-beam',
-  '餐飲食品': 'fa-utensils',
-  '其他': 'fa-pen',
+  家居物業: 'fa-home',
+  交通出行: 'fa-shuttle-van',
+  休閒娛樂: 'fa-grin-beam',
+  餐飲食品: 'fa-utensils',
+  其他: 'fa-pen',
 }
 
 // Home
@@ -31,7 +31,7 @@ router.get('/', (req, res) => {
       })
       res.render('index', { categories, records })
     })
-    .catch(error => console.log(error))
+    .catch((error) => console.log(error))
 })
 
 // Show the new expense input form
@@ -39,6 +39,25 @@ router.get('/new', (req, res) => {
   Category.find({})
     .lean()
     .then((categories) => res.render('new', { categories }))
+    .catch((error) => console.log(error))
+})
+
+// Show the edit expense input form
+router.get('/edit/:id', (req, res) => {
+  const _id = req.params.id
+  const userId = req.user._id
+  Promise.all([
+    Category.find({}).lean(),
+    Record.findOne({ _id, userId }).populate('categoryId').lean(),
+  ])
+    .then(([categories, record]) => {
+      let date = new Date(record.date)
+      let year = date.getFullYear()
+      let month = (date.getMonth() + 1).toString().padStart(2, '0')
+      let day = date.getDate().toString().padStart(2, '0')
+      record.date = `${year}-${month}-${day}`
+      res.render('edit', { categories, record, _id })
+    })
     .catch((error) => console.log(error))
 })
 
@@ -53,7 +72,21 @@ router.post('/', (req, res) => {
     categoryId,
     userId,
   })
-  newRecord.save()
+  newRecord
+    .save()
+    .then(() => res.redirect('/'))
+    .catch((error) => console.log(error))
+})
+
+// Edit expense
+router.put('/:id', (req, res) => {
+  const { name, amount, date, categoryId } = req.body
+  const _id = req.params.id
+  const userId = req.user._id
+  Record.findOneAndUpdate(
+    { _id, userId },
+    { $set: { name, amount, date, categoryId } }
+  )
     .then(() => res.redirect('/'))
     .catch((error) => console.log(error))
 })
