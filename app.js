@@ -36,6 +36,13 @@ usePassport(app)
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 
+// Set res.locals
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.isAuthenticated()
+  res.locals.user = req.user
+  next()
+})
+
 // Use router and css
 app.use(router)
 app.use('/css', express.static('css'))

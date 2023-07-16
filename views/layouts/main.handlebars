@@ -28,7 +28,11 @@
       <div class="container">
         <a class="navbar-brand" href="/">老爸的私房錢</a>
         <div class="d-flex">
-          <button class="btn btn-success" type="submit">登出</button>
+          {{#if isAuthenticated}}
+            <a class="btn btn-success" href="/users/logout">登出</a>
+          {{else}}
+            <a class="btn btn-success" href="/users/login">登入</a>
+          {{/if}}
         </div>
       </div>
     </nav>
