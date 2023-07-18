@@ -16,7 +16,7 @@
 ![Static Badge](https://img.shields.io/badge/express--handlebars-7.0.7-green)
 ![Static Badge](https://img.shields.io/badge/express--session-1.17.3-green)
 ![Static Badge](https://img.shields.io/badge/method--override-3.0.0-green)
-![Static Badge](https://img.shields.io/badge/mongoose-7.3.1-green)
+![Static Badge](https://img.shields.io/badge/method--validator-7.0.1-green)
 ![Static Badge](https://img.shields.io/badge/passport-0.6.0-green)
 ![Static Badge](https://img.shields.io/badge/passport--local-1.0.0-green)
 ![Static Badge](https://img.shields.io/badge/dotenv-16.3.1-green)
