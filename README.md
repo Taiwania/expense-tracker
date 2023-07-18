@@ -58,7 +58,7 @@
     npm run dev
     ```
 
-    看到以下指令代表網站載入完成，可以使用瀏覽器打開 http://localhost:3310 即可進入網站。
+    看到以下指令代表網站載入完成，可以使用瀏覽器打開 http://localhost:3310 即可進入網站。帳號預設為 john.doe@example.com，密碼預設為 Alpha-Camp-202307。
 
     ```
     The website http://localhost:3310 is online.
@@ -90,4 +90,4 @@
     heroku run npm run seed -a <自己的 Heroku 專案名稱>
     ```
 
-    完成後即可使用 Heroku 的網站連結操作本網站。
+    完成後即可使用 Heroku 的網站連結操作本網站。帳號預設為 john.doe@example.com，密碼預設為 Alpha-Camp-202307。
