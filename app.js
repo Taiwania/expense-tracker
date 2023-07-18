@@ -25,7 +25,11 @@ const router = require('./routes')
 const exphbs = require('express-handlebars')
 const handlebars = exphbs.create({ defaultLayout: 'main' })
 handlebars.handlebars.registerHelper('eq', (a, b) => {
-  return a.toString() === b.toString()
+  if (a !== undefined && b !== undefined) {
+    return a.toString() === b.toString()
+  } else {
+    return false
+  }
 })
 app.engine('handlebars', handlebars.engine)
 app.set('view engine', 'handlebars')
@@ -67,6 +71,6 @@ app.use(router)
 app.use('/css', express.static('css'))
 
 // Port listener
-app.listen(process.env.PORT, () => {
+app.listen(PORT, () => {
   console.log(`The website http://localhost:${PORT} is running.`)
 })

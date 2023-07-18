@@ -3,6 +3,7 @@
     <div class="card card-body">
       <h1 class="text-center mt-3 mb-3">請輸入您的支出</h1>
       <p>* 此項目為必填</p>
+      {{> message}}
       <form action="/" method="POST">
         <div class="mb-3 row">
           <label for="name" class="col-sm-2 col-form-label">名稱 *</label>
@@ -34,7 +35,7 @@
             <select class="form-select" id="categoryId" name="categoryId">
               <option value="">請選擇類別</option>
               {{#each categories}}
-                <option value="{{this._id}}">{{this.name}}</option>
+                <option value="{{this._id}}" {{#if (eq this._id ../categoryId)}}selected{{/if}}>{{this.name}}</option>
               {{/each}}
             </select>
           </div>

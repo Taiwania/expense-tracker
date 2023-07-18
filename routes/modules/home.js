@@ -3,6 +3,7 @@ const express = require('express')
 const router = express.Router()
 const Category = require('../../models/category')
 const Record = require('../../models/record')
+const { check, validationResult } = require('express-validator')
 
 // Set category icons
 const CATEGORY = {
@@ -71,34 +72,92 @@ router.get('/edit/:id', (req, res) => {
 })
 
 // Add new expense
-router.post('/', (req, res) => {
-  const { name, amount, date, categoryId } = req.body
-  const userId = req.user._id
-  const newRecord = new Record({
-    name,
-    amount,
-    date,
-    categoryId,
-    userId,
-  })
-  newRecord
-    .save()
-    .then(() => res.redirect('/'))
-    .catch((error) => console.log(error))
-})
+router.post(
+  '/',
+  [
+    check('name').notEmpty().withMessage('請輸入名稱'),
+    check('date').notEmpty().withMessage('請輸入日期'),
+    check('categoryId').notEmpty().withMessage('請選擇類別'),
+    check('amount').notEmpty().withMessage('請輸入金額'),
+  ],
+  (req, res) => {
+    const { name, amount, date, categoryId } = req.body
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+      const errorMessages = errors.array().map((e) => e.msg)
+      req.flash('warning_msg', errorMessages)
+      Category.find({})
+        .lean()
+        .then((categories) => {
+          res.render('new', {
+            name,
+            amount,
+            date,
+            categoryId,
+            errors: errors.array(),
+            categories,
+          })
+        })
+        .catch((error) => console.log(error))
+    }
+
+    const userId = req.user._id
+    const newRecord = new Record({
+      name,
+      amount,
+      date,
+      categoryId,
+      userId,
+    })
+    newRecord
+      .save()
+      .then(() => res.redirect('/'))
+      .catch((error) => console.log(error))
+  }
+)
 
 // Edit expense
-router.put('/:id', (req, res) => {
-  const { name, amount, date, categoryId } = req.body
-  const _id = req.params.id
-  const userId = req.user._id
-  Record.findOneAndUpdate(
-    { _id, userId },
-    { $set: { name, amount, date, categoryId } }
-  )
-    .then(() => res.redirect('/'))
-    .catch((error) => console.log(error))
-})
+router.put(
+  '/:id',
+  [
+    check('name').notEmpty().withMessage('請輸入名稱'),
+    check('date').notEmpty().withMessage('請輸入日期'),
+    check('categoryId').notEmpty().withMessage('請選擇類別'),
+    check('amount').notEmpty().withMessage('請輸入金額'),
+  ],
+  (req, res) => {
+    const { name, amount, date, categoryId } = req.body
+    const _id = req.params.id
+    const userId = req.user._id
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+      const errorMessages = errors.array().map((e) => e.msg)
+      req.flash('warning_msg', errorMessages)
+      return Promise.all([
+        Category.find({}).lean(),
+        Record.findOne({ _id, userId }).populate('categoryId').lean(),
+      ])
+        .then(([categories, record]) => {
+          record.date = record.date.toISOString().split('T')[0]
+          res.render('edit', {
+            record,
+            errors: errors.array(),
+            categories,
+          })
+        })
+        .catch((error) => console.log(error))
+    }
+
+    Record.findOneAndUpdate(
+      { _id, userId },
+      { $set: { name, amount, date, categoryId } }
+    )
+      .then(() => res.redirect('/'))
+      .catch((error) => console.log(error))
+  }
+)
 
 // Delete expense
 router.delete('/:id', (req, res) => {

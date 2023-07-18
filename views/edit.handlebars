@@ -3,6 +3,7 @@
     <div class="card card-body">
       <h1 class="text-center mt-3 mb-3">請編輯您的支出</h1>
       <p>* 此項目為必填</p>
+      {{> message}}
       <form action="/{{record._id}}/?_method=PUT" method="POST">
         <div class="mb-3 row">
           <label for="name" class="col-sm-2 col-form-label">名稱 *</label>
